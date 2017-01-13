@@ -1,0 +1,26 @@
+#!/bin/sh
+
+mkdir build
+cd build
+
+PYROOT=$(dirname $(which python))/../
+CUDA_HOME=/opt/cuda/8.0
+
+cmake  ..  -DCMAKE_CXX_FLAGS=-std=c++98 \
+	-DCMAKE_INSTALL_PREFIX=/tmp \
+	-DCUDA_SDK_ROOT_DIR=$CUDA_HOME \
+	-DCUDA_CUDART_LIBRARY=$CUDA_HOME/lib64/libcudart.so \
+	-DCUDA_TOOLKIT_INCLUDE=$CUDA_HOME/include \
+	-DOPENCL_LIBRARY=$CUDA_HOME/lib64/libOpenCL.so \
+	-DOPENCL_INCLUDE_DIR=$CUDA_HOME/include \
+	-DOPENMM_DIR=$PYROOT \
+	-DPLUMED_BUILD_CUDA_LIB=ON \
+	-DPLUMED_BUILD_OPENCL_LIB=ON \
+	-DPLUMED_BUILD_PYTHON_WRAPPERS=OFF \
+	-DPLUMED_INCLUDE_DIR=$PYDIR/include \
+	-DPLUMED_LIBRARY_DIR=$PYROOT/lib \
+	-DPYTHON_EXECUTABLE=$(which python) 
+
+
+make
+	
