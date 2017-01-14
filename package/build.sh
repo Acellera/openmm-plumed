@@ -1,0 +1,31 @@
+#!/bin/sh
+
+rm -rf fu
+mkdir -p fu
+cd fu
+
+PYROOT=$(dirname $(which python))/../
+CUDA_HOME=$CUDA_HOME
+OCL_HOME=/apps//opencl/intel-2013-beta-2/lib64
+
+cmake  ..  -DCMAKE_CXX_FLAGS=--std=c++98 \
+  -DCMAKE_CXX_COMPILER=$(which g++) \
+	-DCMAKE_INSTALL_PREFIX=$PREFIX \
+	-DCUDA_SDK_ROOT_DIR=$CUDA_HOME \
+	-DCUDA_CUDART_LIBRARY=$CUDA_HOME/lib64/libcudart.so \
+	-DCUDA_TOOLKIT_INCLUDE=$CUDA_HOME/include \
+	-DOPENCL_LIBRARY=$OCL_HOME/libOpenCL.so \
+	-DOPENCL_INCLUDE_DIR=$CUDA_HOME/include \
+	-DOPENMM_DIR=$PYROOT \
+	-DPLUMED_BUILD_CUDA_LIB=ON \
+	-DPLUMED_BUILD_OPENCL_LIB=ON \
+	-DPLUMED_BUILD_PYTHON_WRAPPERS=OFF \
+	-DPLUMED_INCLUDE_DIR=$PYDIR/include \
+	-DPLUMED_LIBRARY_DIR=$PYROOT/lib \
+  -DCUDA_USE_STATIC_CUDA_RUNTIME=YES \
+	-DPYTHON_EXECUTABLE=$(which python) 
+
+
+make
+make install
+	

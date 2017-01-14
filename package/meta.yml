@@ -1,0 +1,20 @@
+about:
+  home: https://github.com/peastman/openmm-plumed
+  license: BSD
+
+package:
+ name: openmm-plumed
+ version: 1.0.0
+
+source:
+ path: ..
+
+build:
+ 
+requirements:
+ build:
+  - plumed2
+
+ run:
+  - plumed2
+
