@@ -1,12 +1,14 @@
 #!/bin/sh
 
-mkdir build
-cd build
+rm -rf fu
+mkdir -p fu
+cd fu
 
 PYROOT=$(dirname $(which python))/../
 CUDA_HOME=/opt/cuda/8.0
 
-cmake  ..  -DCMAKE_CXX_FLAGS=-std=c++98 \
+cmake  ..  -DCMAKE_CXX_FLAGS=--std=c++98 \
+  -DCMAKE_CXX_COMPILER=$(which g++-4.4) \
 	-DCMAKE_INSTALL_PREFIX=/tmp \
 	-DCUDA_SDK_ROOT_DIR=$CUDA_HOME \
 	-DCUDA_CUDART_LIBRARY=$CUDA_HOME/lib64/libcudart.so \
@@ -19,6 +21,7 @@ cmake  ..  -DCMAKE_CXX_FLAGS=-std=c++98 \
 	-DPLUMED_BUILD_PYTHON_WRAPPERS=OFF \
 	-DPLUMED_INCLUDE_DIR=$PYDIR/include \
 	-DPLUMED_LIBRARY_DIR=$PYROOT/lib \
+  -DCUDA_USE_STATIC_CUDA_RUNTIME=YES \
 	-DPYTHON_EXECUTABLE=$(which python) 
 
 
